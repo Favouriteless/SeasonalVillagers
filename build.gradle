@@ -2,11 +2,13 @@ buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
         maven { url = 'https://maven.parchmentmc.org' }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath 'org.parchmentmc:librarian:1.+'
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 
@@ -16,10 +18,11 @@ plugins {
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
+apply plugin: 'org.spongepowered.mixin'
 
 version = '1.0'
-group = 'com.favouriteless.seasonalvillagers' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'seasonalvillagers'
+group = 'com.favouriteless.seasonal_villagers' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'seasonal_villagers'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -27,7 +30,7 @@ println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty '
 minecraft {
     mappings channel: 'parchment', version: '2022.09.04-1.18.2'
 
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
 
     runs {
         client {
@@ -35,10 +38,12 @@ minecraft {
 
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', 'examplemod'
+            property 'forge.enabledGameTestNamespaces', 'seasonal_villagers'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
-                seasonalvillagers {
+                seasonal_villagers {
                     source sourceSets.main
                 }
             }
@@ -49,10 +54,12 @@ minecraft {
 
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', 'examplemod'
+            property 'forge.enabledGameTestNamespaces', 'seasonal_villagers'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
-                seasonalvillagers {
+                seasonal_villagers {
                     source sourceSets.main
                 }
             }
@@ -62,10 +69,12 @@ minecraft {
 
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            property 'forge.enabledGameTestNamespaces', 'examplemod'
+            property 'forge.enabledGameTestNamespaces', 'seasonal_villagers'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
-                seasonalvillagers {
+                seasonal_villagers {
                     source sourceSets.main
                 }
             }
@@ -76,7 +85,9 @@ minecraft {
 
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'seasonal_villagers', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 seasonalvillagers {
@@ -102,8 +113,7 @@ dependencies {
 
     minecraft 'net.minecraftforge:forge:1.18.2-40.1.80'
 
-    implementation 'curse.maven:customvillagertrades-463402:3722281'
-    implementation 'curse.maven:sereneseasons-291874:3804257'
+    implementation fg.deobf('com.github.glitchfiend:SereneSeasons:1.18.2-7.0.0.15')
 
 }
 
@@ -134,8 +144,4 @@ publishing {
             url "file://${project.projectDir}/mcmodsrepo"
         }
     }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
 }

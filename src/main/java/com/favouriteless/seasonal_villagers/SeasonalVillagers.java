@@ -9,7 +9,7 @@ public class SeasonalVillagers
 {
 
     public static final String MOD_ID = "seasonal_villagers";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public SeasonalVillagers()
     {

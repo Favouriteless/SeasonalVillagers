@@ -7,7 +7,7 @@ version="${file.jarVersion}" #mandatory
 displayName="Seasonal Villagers" #mandatory
 logoFile="examplemod.png" #optional
 description='''
-Allows the villager trades to be changed for each season.
+Allows the villager trades to be set for each season individually.
 '''
 
 
