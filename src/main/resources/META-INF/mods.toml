@@ -26,3 +26,10 @@ Allows the villager trades to be set for each season individually.
     versionRange="[1.18.2,1.19)"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.seasonal_villagers]]
+    modId="sereneseasons"
+    mandatory=true
+    versionRange="[1.18.2,1.19)"
+    ordering="NONE"
+    side="BOTH"
