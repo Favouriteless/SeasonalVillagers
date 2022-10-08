@@ -1,0 +1,92 @@
+{
+  "examples": [
+      { "level": 1, "type": "items",
+          "item": "minecraft:bread", #mandatory
+          "count": 1, #mandatory
+          "currency": "minecraft:emerald", #mandatory
+          "cost": 1, #mandatory
+
+          "currency2": "minecraft:emerald", #optional
+          "cost2": 0, #optional
+          "maxUses": 12, #optional
+          "villagerXp": 1, #optional
+          "priceMultiplier": 0.05 #optional
+      }
+
+
+
+      { "level": 1, "type": "suspicious_stew",
+          "effect": "minecraft:absorption", #mandatory,
+          "duration": 120 #mandatory
+          "currency": "minecraft:emerald", #mandatory
+          "cost": 1, #mandatory
+
+          "currency2": "minecraft:emerald", #optional
+          "cost2": 0, #optional
+          "maxUses": 12, #optional
+          "villagerXp": 1, #optional
+          "priceMultiplier": 0.05 #optional
+      }
+
+
+
+      { "level": 1, "type": "enchanted_item",
+          "item": "minecraft:fishing_rod", #mandatory
+          "currency": "minecraft:emerald", #mandatory
+          "cost": 1, #mandatory
+
+          "maxUses": 12, #optional
+          "villagerXp": 1, #optional
+          "priceMultiplier": 0.05 #optional
+      }
+
+
+
+      { "level": 1, "type": "enchant_book",
+          "currency": "minecraft:emerald", #mandatory
+
+          "maxUses": 12, #optional
+          "villagerXp": 1, #optional
+          "priceMultiplier": 0.2 #optional
+      }
+
+
+
+      { "level": 1, "type": "ocean_treasure_map",
+          "currency": "minecraft:emerald", #mandatory
+          "cost": 1, #mandatory
+
+          "currency2": "minecraft:emerald", #optional
+          "cost2": 0, #optional
+          "maxUses": 12, #optional
+          "villagerXp": 1, #optional
+          "priceMultiplier": 0.05 #optional
+      }
+
+
+      { "level": 1, "type": "woodland_treasure_map",
+          "currency": "minecraft:emerald", #mandatory
+          "cost": 1, #mandatory
+
+          "currency2": "minecraft:emerald", #optional
+          "cost2": 0, #optional
+          "maxUses": 12, #optional
+          "villagerXp": 1, #optional
+          "priceMultiplier": 0.05 #optional
+      }
+
+
+
+      { "level": 1, "type": "dyed_armor",
+          "item": "minecraft:leather_chestplate", #mandatory
+          "currency": "minecraft:emerald", #mandatory
+          "cost": 1, #mandatory
+
+          "currency2": "minecraft:emerald", #optional
+          "cost2": 0, #optional
+          "maxUses": 12, #optional
+          "villagerXp": 1, #optional
+          "priceMultiplier": 0.05 #optional
+      }
+  ]
+}

@@ -1,6 +1,7 @@
 package com.favouriteless.seasonal_villagers.core.util.reloadlisteners;
 
 import com.favouriteless.seasonal_villagers.SeasonalVillagers;
+import com.favouriteless.seasonal_villagers.common.init.SeasonalVillagersTradeTypes.*;
 import com.google.common.collect.Maps;
 import com.google.gson.*;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -9,18 +10,20 @@ import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
-import net.minecraft.tags.ConfiguredStructureTags;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
-import net.minecraft.world.entity.npc.VillagerTrades.*;
-import net.minecraft.world.level.saveddata.maps.MapDecoration.Type;
+import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.function.Function;
 
 public class SeasonalTradeReloadListener extends SimpleJsonResourceReloadListener {
 
@@ -36,6 +39,17 @@ public class SeasonalTradeReloadListener extends SimpleJsonResourceReloadListene
 		map.put("summer", SUMMER_TRADES);
 		map.put("autumn", AUTUMN_TRADES);
 		map.put("winter", WINTER_TRADES);
+	});
+
+	public final Map<String, Function<JsonObject, ItemListing>> TYPE_FACTORIES = Util.make(Maps.newHashMap(), (map) -> {
+		map.put("items", SeasonalTradeReloadListener::getItemsForItems);
+		map.put("suspicious_stew", SeasonalTradeReloadListener::getStewForItems);
+		map.put("enchanted_item", SeasonalTradeReloadListener::getEnchantedItemForItems);
+		map.put("enchant_book", SeasonalTradeReloadListener::getEnchantBookForItems);
+		map.put("tipped_arrow", SeasonalTradeReloadListener::getTippedArrowForItems);
+		map.put("ocean_treasure_map", SeasonalTradeReloadListener::getOceanMapForItems);
+		map.put("woodland_treasure_map", SeasonalTradeReloadListener::getWoodlandMapForItems);
+		map.put("dyed_armor", SeasonalTradeReloadListener::getDyedArmorForItems);
 	});
 
 	public SeasonalTradeReloadListener(String directory) {
@@ -82,75 +96,14 @@ public class SeasonalTradeReloadListener extends SimpleJsonResourceReloadListene
 		tradeArray.forEach(tradeEntry -> {
 			JsonObject trade = tradeEntry.getAsJsonObject();
 
-			if(!trade.has("type"))
+			if(!trade.has("type") || !TYPE_FACTORIES.containsKey(trade.get("type").getAsString()))
+				return;
+			if(!trade.has("level"))
 				return;
 
 			String type = trade.get("type").getAsString();
-
-			int level = 0;
-			if(trade.has("level"))
-				level = trade.get("level").getAsInt();
-
-			ItemListing listing = switch(type) {
-				case "emeralds_for_items" -> new EmeraldForItems(
-						Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("item").getAsString()))),
-						trade.get("cost").getAsInt(),
-						trade.get("maxUses").getAsInt(),
-						trade.get("villagerXp").getAsInt());
-				case "items_for_emeralds" -> new ItemsForEmeralds(
-						Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("item").getAsString()))),
-						trade.get("cost").getAsInt(),
-						trade.get("maxUses").getAsInt(),
-						trade.get("villagerXp").getAsInt());
-				case "stew_for_emeralds" -> new SuspiciousStewForEmerald(
-						Objects.requireNonNull(ForgeRegistries.MOB_EFFECTS.getValue(new ResourceLocation(trade.get("effect").getAsString()))),
-						trade.get("duration").getAsInt(),
-						trade.get("villagerXp").getAsInt());
-				case "items_and_emeralds_for_items" -> new ItemsAndEmeraldsToItems(
-						Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("payItem").getAsString()))),
-						trade.get("payNumberOfItems").getAsInt(),
-						trade.get("cost").getAsInt(),
-						Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("item").getAsString()))),
-						trade.get("numberOfItems").getAsInt(),
-						trade.get("maxUses").getAsInt(),
-						trade.get("villagerXp").getAsInt());
-				case "enchanted_item_for_emeralds" -> new EnchantedItemForEmeralds(
-						Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("item").getAsString()))),
-						trade.get("cost").getAsInt(),
-						trade.get("maxUses").getAsInt(),
-						trade.get("villagerXp").getAsInt(),
-						trade.get("priceMultiplier").getAsFloat());
-				case "tipped_arrow_for_items_and_emeralds" -> new TippedArrowForItemsAndEmeralds(
-						Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("payItem").getAsString()))),
-						trade.get("payNumberOfItems").getAsInt(),
-						Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("item").getAsString()))),
-						trade.get("numberOfItems").getAsInt(),
-						trade.get("cost").getAsInt(),
-						trade.get("maxUses").getAsInt(),
-						trade.get("villagerXp").getAsInt());
-				case "enchant_book_for_emeralds" -> new EnchantBookForEmeralds(
-						trade.get("cost").getAsInt());
-				case "ocean_treasure_map_for_emeralds" -> new TreasureMapForEmeralds(
-						trade.get("cost").getAsInt(),
-						ConfiguredStructureTags.ON_OCEAN_EXPLORER_MAPS,
-						"filled_map.monument",
-						Type.MONUMENT,
-						trade.get("maxUses").getAsInt(),
-						trade.get("villagerXp").getAsInt());
-				case "woodland_treasure_map_for_emeralds" -> new TreasureMapForEmeralds(
-						trade.get("cost").getAsInt(),
-						ConfiguredStructureTags.ON_WOODLAND_EXPLORER_MAPS,
-						"filled_map.mansion",
-						Type.MANSION,
-						trade.get("maxUses").getAsInt(),
-						trade.get("villagerXp").getAsInt());
-				case "dyed_armor_for_emeralds" -> new DyedArmorForEmeralds(
-						Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("item").getAsString()))),
-						trade.get("cost").getAsInt(),
-						trade.get("maxUses").getAsInt(),
-						trade.get("villagerXp").getAsInt());
-				default -> null;
-			};
+			int level = trade.get("level").getAsInt();
+			ItemListing listing = TYPE_FACTORIES.get(type).apply(trade);
 
 			if(listing == null)
 				return;
@@ -173,5 +126,241 @@ public class SeasonalTradeReloadListener extends SimpleJsonResourceReloadListene
 		}
 		return finalTradeMap;
 	}
+
+
+	public static void checkMandatoryResult(JsonObject trade) {
+		if(!trade.has("item"))
+			throw new JsonParseException("Trade missing result item");
+		if(!trade.has("count"))
+			throw new JsonParseException("Trade missing result count");
+	}
+
+	private static void checkMandatoryCurrency(JsonObject trade) {
+		if(!trade.has("currency"))
+			throw new JsonParseException("Trade missing currency item");
+		if(!trade.has("cost"))
+			throw new JsonParseException("Trade missing cost");
+	}
+
+	public static ItemListing getItemsForItems(JsonObject trade) {
+		checkMandatoryResult(trade);
+		checkMandatoryCurrency(trade);
+
+		Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("item").getAsString()));
+		Item currency = ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("currency").getAsString()));
+		int count = trade.get("count").getAsInt();
+		int cost = trade.get("cost").getAsInt();
+
+		int maxUses = 12;
+		int villagerXp = 1;
+		float priceMultiplier = 0.05F;
+
+		if(trade.has("maxUses"))
+			maxUses = trade.get("maxUses").getAsInt();
+		if(trade.has("villagerXp"))
+			villagerXp = trade.get("villagerXp").getAsInt();
+		if(trade.has("priceMultiplier"))
+			priceMultiplier = trade.get("priceMultiplier").getAsFloat();
+
+		if(trade.has("currency2") && trade.has("cost2")) {
+			Item currency2 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("currency2").getAsString()));
+			int cost2 = trade.get("cost2").getAsInt();
+			return new ItemsForItems(new ItemStack(item, count), new ItemStack(currency, cost), new ItemStack(currency2, cost2), maxUses, villagerXp, priceMultiplier);
+		}
+		else {
+			return new ItemsForItems(new ItemStack(item, count), new ItemStack(currency, cost), ItemStack.EMPTY, maxUses, villagerXp, priceMultiplier);
+		}
+	}
+
+	public static ItemListing getStewForItems(JsonObject trade) {
+		checkMandatoryCurrency(trade);
+		if(!trade.has("effect"))
+			throw new JsonParseException("Stew trade missing effect");
+		if(!trade.has("duration"))
+			throw new JsonParseException("Stew trade missing effect duration");
+
+		MobEffect effect = ForgeRegistries.MOB_EFFECTS.getValue(new ResourceLocation(trade.get("effect").getAsString()));
+		int duration = trade.get("duration").getAsInt();
+		Item currency = ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("currency").getAsString()));
+		int cost = trade.get("cost").getAsInt();
+
+		int maxUses = 12;
+		int villagerXp = 1;
+		float priceMultiplier = 0.05F;
+
+		if(trade.has("maxUses"))
+			maxUses = trade.get("maxUses").getAsInt();
+		if(trade.has("villagerXp"))
+			villagerXp = trade.get("villagerXp").getAsInt();
+		if(trade.has("priceMultiplier"))
+			priceMultiplier = trade.get("priceMultiplier").getAsFloat();
+
+		if(trade.has("currency2") && trade.has("cost2")) {
+			Item currency2 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("currency2").getAsString()));
+			int cost2 = trade.get("cost2").getAsInt();
+			return new SuspiciousStewForItems(effect, duration, new ItemStack(currency, cost), new ItemStack(currency2, cost2), maxUses, villagerXp, priceMultiplier);
+		}
+		else {
+			return new SuspiciousStewForItems(effect, duration, new ItemStack(currency, cost), ItemStack.EMPTY, maxUses, villagerXp, priceMultiplier);
+		}
+	}
+
+	public static ItemListing getEnchantedItemForItems(JsonObject trade) {
+		checkMandatoryCurrency(trade);
+		if(!trade.has("item"))
+			throw new JsonParseException("Trade missing result item");
+
+		Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("item").getAsString()));
+		Item currency = ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("currency").getAsString()));
+		int cost = trade.get("cost").getAsInt();
+
+		int maxUses = 12;
+		int villagerXp = 1;
+		float priceMultiplier = 0.05F;
+
+		if(trade.has("maxUses"))
+			maxUses = trade.get("maxUses").getAsInt();
+		if(trade.has("villagerXp"))
+			villagerXp = trade.get("villagerXp").getAsInt();
+		if(trade.has("priceMultiplier"))
+			priceMultiplier = trade.get("priceMultiplier").getAsFloat();
+
+		return new EnchantedItemForItems(new ItemStack(item, 1), new ItemStack(currency, cost), maxUses, villagerXp, priceMultiplier);
+	}
+
+	public static ItemListing getTippedArrowForItems(JsonObject trade) {
+		checkMandatoryCurrency(trade);
+		if(!trade.has("count"))
+			throw new JsonParseException("Trade missing result count");
+
+		int count = trade.get("count").getAsInt();
+		Item currency = ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("currency").getAsString()));
+		int cost = trade.get("cost").getAsInt();
+
+		int maxUses = 12;
+		int villagerXp = 1;
+		float priceMultiplier = 0.05F;
+
+		if(trade.has("maxUses"))
+			maxUses = trade.get("maxUses").getAsInt();
+		if(trade.has("villagerXp"))
+			villagerXp = trade.get("villagerXp").getAsInt();
+		if(trade.has("priceMultiplier"))
+			priceMultiplier = trade.get("priceMultiplier").getAsFloat();
+
+		if(trade.has("currency2") && trade.has("cost2")) {
+			Item currency2 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("currency2").getAsString()));
+			int cost2 = trade.get("cost2").getAsInt();
+			return new TippedArrowForItems(new ItemStack(Items.TIPPED_ARROW, count), new ItemStack(currency, cost), new ItemStack(currency2, cost2), maxUses, villagerXp, priceMultiplier);
+		}
+		else {
+			return new TippedArrowForItems(new ItemStack(Items.TIPPED_ARROW, count), new ItemStack(currency, cost), ItemStack.EMPTY, maxUses, villagerXp, priceMultiplier);
+		}	}
+
+	public static ItemListing getEnchantBookForItems(JsonObject trade) {
+		if(!trade.has("currency"))
+			throw new JsonParseException("Trade missing currency item");
+		Item currency = ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("currency").getAsString()));
+
+		int maxUses = 12;
+		int villagerXp = 1;
+		float priceMultiplier = 0.2F;
+
+		if(trade.has("maxUses"))
+			maxUses = trade.get("maxUses").getAsInt();
+		if(trade.has("villagerXp"))
+			villagerXp = trade.get("villagerXp").getAsInt();
+		if(trade.has("priceMultiplier"))
+			priceMultiplier = trade.get("priceMultiplier").getAsFloat();
+
+
+		return new EnchantBookForItems(currency, maxUses, villagerXp, priceMultiplier);
+	}
+
+	public static ItemListing getOceanMapForItems(JsonObject trade) {
+		checkMandatoryCurrency(trade);
+
+		Item currency = ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("currency").getAsString()));
+		int cost = trade.get("cost").getAsInt();
+
+		int maxUses = 12;
+		int villagerXp = 1;
+		float priceMultiplier = 0.05F;
+
+		if(trade.has("maxUses"))
+			maxUses = trade.get("maxUses").getAsInt();
+		if(trade.has("villagerXp"))
+			villagerXp = trade.get("villagerXp").getAsInt();
+		if(trade.has("priceMultiplier"))
+			priceMultiplier = trade.get("priceMultiplier").getAsFloat();
+
+		if(trade.has("currency2") && trade.has("cost2")) {
+			Item currency2 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("currency2").getAsString()));
+			int cost2 = trade.get("cost2").getAsInt();
+			return new OceanTreasureMapForItems(new ItemStack(currency, cost), new ItemStack(currency2, cost2), maxUses, villagerXp, priceMultiplier);
+		}
+		else {
+			return new OceanTreasureMapForItems(new ItemStack(currency, cost), ItemStack.EMPTY, maxUses, villagerXp, priceMultiplier);
+		}
+	}
+
+	public static ItemListing getWoodlandMapForItems(JsonObject trade) {
+		checkMandatoryCurrency(trade);
+
+		Item currency = ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("currency").getAsString()));
+		int cost = trade.get("cost").getAsInt();
+
+		int maxUses = 12;
+		int villagerXp = 1;
+		float priceMultiplier = 0.05F;
+
+		if(trade.has("maxUses"))
+			maxUses = trade.get("maxUses").getAsInt();
+		if(trade.has("villagerXp"))
+			villagerXp = trade.get("villagerXp").getAsInt();
+		if(trade.has("priceMultiplier"))
+			priceMultiplier = trade.get("priceMultiplier").getAsFloat();
+
+		if(trade.has("currency2") && trade.has("cost2")) {
+			Item currency2 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("currency2").getAsString()));
+			int cost2 = trade.get("cost2").getAsInt();
+			return new WoodlandTreasureMapForItems(new ItemStack(currency, cost), new ItemStack(currency2, cost2), maxUses, villagerXp, priceMultiplier);
+		}
+		else {
+			return new WoodlandTreasureMapForItems(new ItemStack(currency, cost), ItemStack.EMPTY, maxUses, villagerXp, priceMultiplier);
+		}
+	}
+
+	public static ItemListing getDyedArmorForItems(JsonObject trade) {
+		if(!trade.has("item"))
+			throw new JsonParseException("Trade missing result item");
+		checkMandatoryCurrency(trade);
+
+		Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("item").getAsString()));
+		Item currency = ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("currency").getAsString()));
+		int cost = trade.get("cost").getAsInt();
+
+		int maxUses = 12;
+		int villagerXp = 1;
+		float priceMultiplier = 0.05F;
+
+		if(trade.has("maxUses"))
+			maxUses = trade.get("maxUses").getAsInt();
+		if(trade.has("villagerXp"))
+			villagerXp = trade.get("villagerXp").getAsInt();
+		if(trade.has("priceMultiplier"))
+			priceMultiplier = trade.get("priceMultiplier").getAsFloat();
+
+		if(trade.has("currency2") && trade.has("cost2")) {
+			Item currency2 = ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("currency2").getAsString()));
+			int cost2 = trade.get("cost2").getAsInt();
+			return new DyedArmorForItems(item, new ItemStack(currency, cost), new ItemStack(currency2, cost2), maxUses, villagerXp, priceMultiplier);
+		}
+		else {
+			return new DyedArmorForItems(item, new ItemStack(currency, cost), ItemStack.EMPTY, maxUses, villagerXp, priceMultiplier);
+		}
+	}
+
+
 
 }
