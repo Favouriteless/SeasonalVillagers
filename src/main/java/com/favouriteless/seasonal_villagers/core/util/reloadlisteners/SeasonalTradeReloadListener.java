@@ -9,13 +9,12 @@ import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.tags.ConfiguredStructureTags;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
-import net.minecraft.world.entity.npc.VillagerTrades.EmeraldForItems;
-import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
-import net.minecraft.world.entity.npc.VillagerTrades.ItemsForEmeralds;
-import net.minecraft.world.entity.npc.VillagerTrades.SuspiciousStewForEmerald;
+import net.minecraft.world.entity.npc.VillagerTrades.*;
+import net.minecraft.world.level.saveddata.maps.MapDecoration.Type;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -106,6 +105,49 @@ public class SeasonalTradeReloadListener extends SimpleJsonResourceReloadListene
 				case "stew_for_emeralds" -> new SuspiciousStewForEmerald(
 						Objects.requireNonNull(ForgeRegistries.MOB_EFFECTS.getValue(new ResourceLocation(trade.get("effect").getAsString()))),
 						trade.get("duration").getAsInt(),
+						trade.get("villagerXp").getAsInt());
+				case "items_and_emeralds_for_items" -> new ItemsAndEmeraldsToItems(
+						Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("payItem").getAsString()))),
+						trade.get("payNumberOfItems").getAsInt(),
+						trade.get("cost").getAsInt(),
+						Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("item").getAsString()))),
+						trade.get("numberOfItems").getAsInt(),
+						trade.get("maxUses").getAsInt(),
+						trade.get("villagerXp").getAsInt());
+				case "enchanted_item_for_emeralds" -> new EnchantedItemForEmeralds(
+						Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("item").getAsString()))),
+						trade.get("cost").getAsInt(),
+						trade.get("maxUses").getAsInt(),
+						trade.get("villagerXp").getAsInt(),
+						trade.get("priceMultiplier").getAsFloat());
+				case "tipped_arrow_for_items_and_emeralds" -> new TippedArrowForItemsAndEmeralds(
+						Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("payItem").getAsString()))),
+						trade.get("payNumberOfItems").getAsInt(),
+						Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("item").getAsString()))),
+						trade.get("numberOfItems").getAsInt(),
+						trade.get("cost").getAsInt(),
+						trade.get("maxUses").getAsInt(),
+						trade.get("villagerXp").getAsInt());
+				case "enchant_book_for_emeralds" -> new EnchantBookForEmeralds(
+						trade.get("cost").getAsInt());
+				case "ocean_treasure_map_for_emeralds" -> new TreasureMapForEmeralds(
+						trade.get("cost").getAsInt(),
+						ConfiguredStructureTags.ON_OCEAN_EXPLORER_MAPS,
+						"filled_map.monument",
+						Type.MONUMENT,
+						trade.get("maxUses").getAsInt(),
+						trade.get("villagerXp").getAsInt());
+				case "woodland_treasure_map_for_emeralds" -> new TreasureMapForEmeralds(
+						trade.get("cost").getAsInt(),
+						ConfiguredStructureTags.ON_WOODLAND_EXPLORER_MAPS,
+						"filled_map.mansion",
+						Type.MANSION,
+						trade.get("maxUses").getAsInt(),
+						trade.get("villagerXp").getAsInt());
+				case "dyed_armor_for_emeralds" -> new DyedArmorForEmeralds(
+						Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(trade.get("item").getAsString()))),
+						trade.get("cost").getAsInt(),
+						trade.get("maxUses").getAsInt(),
 						trade.get("villagerXp").getAsInt());
 				default -> null;
 			};
