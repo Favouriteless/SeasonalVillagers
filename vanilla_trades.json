@@ -147,19 +147,78 @@
     {
       "profession": "minecraft:fletcher",
       "trades": [
+        { "level": 1, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:stick", "cost": 32, "maxUses": 16, "villagerXp": 2 },
+        { "level": 1, "type": "items", "item": "minecraft:arrow", "count": 16, "currency": "minecraft:emerald", "cost": 1, "maxUses": 12, "villagerXp": 1 },
+        { "level": 1, "type": "items", "item": "minecraft:flint", "count": 10, "currency": "minecraft:gravel", "cost": 10, "currency2": "minecraft:emerald", "cost2": 1,"maxUses": 12, "villagerXp": 1 },
 
+        { "level": 2, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:flint", "cost": 26, "maxUses": 12, "villagerXp": 10 },
+        { "level": 2, "type": "items", "item": "minecraft:bow", "count": 1, "currency": "minecraft:emerald", "cost": 2, "maxUses": 12, "villagerXp": 5 },
+
+        { "level": 3, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:string", "cost": 14, "maxUses": 16, "villagerXp": 20 },
+        { "level": 3, "type": "items", "item": "minecraft:crossbow", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 10 },
+
+        { "level": 4, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:feather", "cost": 24, "maxUses": 16, "villagerXp": 30 },
+        { "level": 4, "type": "enchanted_item", "item": "minecraft:bow", "currency": "minecraft:emerald", "cost": 2, "maxUses": 3, "villagerXp": 15 },
+
+        { "level": 5, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:tripwire_hook", "cost": 8, "maxUses": 12, "villagerXp": 30 },
+        { "level": 5, "type": "enchanted_item", "item": "minecraft:crossbow", "currency": "minecraft:emerald", "cost": 3, "maxUses": 3, "villagerXp": 15 },
+        { "level": 5, "type": "tipped_arrow", "count": 5, "currency": "minecraft:arrow", "cost": 5, "currency2": "minecraft:emerald", "cost2": 2, "maxUses": 12, "villagerXp": 30 }
       ]
     },
     {
       "profession": "minecraft:librarian",
       "trades": [
+        { "level": 1, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:paper", "cost": 24, "maxUses": 16, "villagerXp": 2 },
+        { "level": 1, "type": "enchant_book", "currency": "minecraft:emerald", "villagerXp": 1 },
+        { "level": 1, "type": "items", "item": "minecraft:bookshelf", "count": 1, "currency": "minecraft:emerald", "cost": 9, "maxUses": 12, "villagerXp": 1 },
 
+        { "level": 2, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:book", "cost": 5, "maxUses": 16, "villagerXp": 10 },
+        { "level": 2, "type": "enchant_book", "currency": "minecraft:emerald", "villagerXp": 5 },
+        { "level": 2, "type": "items", "item": "minecraft:lantern", "count": 1, "currency": "minecraft:emerald", "cost": 1, "maxUses": 12, "villagerXp": 5 },
+
+        { "level": 3, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:ink_sac", "cost": 5, "maxUses": 12, "villagerXp": 20 },
+        { "level": 3, "type": "enchant_book", "currency": "minecraft:emerald", "villagerXp": 10 },
+        { "level": 3, "type": "items", "item": "minecraft:glass", "count": 4, "currency": "minecraft:emerald", "cost": 1, "maxUses": 12, "villagerXp": 10 },
+
+        { "level": 4, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:writable_book", "cost": 2, "maxUses": 12, "villagerXp": 30 },
+        { "level": 4, "type": "enchant_book", "currency": "minecraft:emerald", "villagerXp": 15 },
+        { "level": 4, "type": "items", "item": "minecraft:clock", "count": 4, "currency": "minecraft:emerald", "cost": 5, "maxUses": 12, "villagerXp": 15 },
+        { "level": 4, "type": "items", "item": "minecraft:compass", "count": 4, "currency": "minecraft:emerald", "cost": 4, "maxUses": 12, "villagerXp": 15 },
+
+        { "level": 5, "type": "items", "item": "minecraft:name_tag", "count": 4, "currency": "minecraft:emerald", "cost": 4, "maxUses": 1, "villagerXp": 30 }
       ]
     },
     {
       "profession": "minecraft:cartographer",
       "trades": [
+        { "level": 1, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:paper", "cost": 24, "maxUses": 16, "villagerXp": 2 },
+        { "level": 1, "type": "items", "item": "minecraft:map", "count": 1, "currency": "minecraft:emerald", "cost": 7, "maxUses": 12, "villagerXp": 1 },
 
+        { "level": 2, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:glass_pane", "cost": 11, "maxUses": 16, "villagerXp": 10 },
+        { "level": 2, "type": "ocean_treasure_map", "currency": "minecraft:compass", "cost": 1, "currency2": "minecraft:emerald", "cost2": 13, "maxUses": 12, "villagerXp": 5 },
+
+        { "level": 3, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:compass", "cost": 11, "maxUses": 12, "villagerXp": 20 },
+        { "level": 3, "type": "woodland_treasure_map", "currency": "minecraft:compass", "cost": 1, "currency2": "minecraft:emerald", "cost2": 14, "maxUses": 12, "villagerXp": 10 },
+
+        { "level": 4, "type": "items", "item": "minecraft:item_frame", "count": 1, "currency": "minecraft:emerald", "cost": 7, "maxUses": 12, "villagerXp": 15 },
+        { "level": 4, "type": "items", "item": "minecraft:white_banner", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 15 },
+        { "level": 4, "type": "items", "item": "minecraft:blue_banner", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 15 },
+        { "level": 4, "type": "items", "item": "minecraft:light_blue_banner", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 15 },
+        { "level": 4, "type": "items", "item": "minecraft:red_banner", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 15 },
+        { "level": 4, "type": "items", "item": "minecraft:pink_banner", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 15 },
+        { "level": 4, "type": "items", "item": "minecraft:green_banner", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 15 },
+        { "level": 4, "type": "items", "item": "minecraft:lime_banner", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 15 },
+        { "level": 4, "type": "items", "item": "minecraft:gray_banner", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 15 },
+        { "level": 4, "type": "items", "item": "minecraft:black_banner", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 15 },
+        { "level": 4, "type": "items", "item": "minecraft:purple_banner", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 15 },
+        { "level": 4, "type": "items", "item": "minecraft:magenta_banner", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 15 },
+        { "level": 4, "type": "items", "item": "minecraft:cyan_banner", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 15 },
+        { "level": 4, "type": "items", "item": "minecraft:brown_banner", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 15 },
+        { "level": 4, "type": "items", "item": "minecraft:yellow_banner", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 15 },
+        { "level": 4, "type": "items", "item": "minecraft:orange_banner", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 15 },
+        { "level": 4, "type": "items", "item": "minecraft:light_gray_banner", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 15 },
+
+        { "level": 5, "type": "items", "item": "minecraft:globe_banner_pattern", "count": 1, "currency": "minecraft:emerald", "cost": 8, "maxUses": 12, "villagerXp": 30 }
       ]
     },
     {
