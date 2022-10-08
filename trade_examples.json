@@ -88,5 +88,19 @@
           "villagerXp": 1, #optional
           "priceMultiplier": 0.05 #optional
       }
+
+
+
+      { "level": 1, "type": "tipped_arrow",
+          "count": 1, #mandatory
+          "currency": "minecraft:emerald", #mandatory
+          "cost": 1, #mandatory
+
+          "currency2": "minecraft:emerald", #optional
+          "cost2": 0, #optional
+          "maxUses": 12, #optional
+          "villagerXp": 1, #optional
+          "priceMultiplier": 0.05 #optional
+      }
   ]
 }
