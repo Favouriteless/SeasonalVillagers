@@ -255,7 +255,8 @@ public class SeasonalTradeReloadListener extends SimpleJsonResourceReloadListene
 		}
 		else {
 			return new TippedArrowForItems(new ItemStack(Items.TIPPED_ARROW, count), new ItemStack(currency, cost), ItemStack.EMPTY, maxUses, villagerXp, priceMultiplier);
-		}	}
+		}
+	}
 
 	public static ItemListing getEnchantBookForItems(JsonObject trade) {
 		if(!trade.has("currency"))

@@ -224,18 +224,66 @@
     {
       "profession": "minecraft:cleric",
       "trades": [
+        { "level": 1, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:rotten_flesh", "cost": 32, "maxUses": 16, "villagerXp": 2 },
+        { "level": 1, "type": "items", "item": "minecraft:redstone", "count": 2, "currency": "minecraft:emerald", "cost": 1, "maxUses": 12, "villagerXp": 1 },
 
+        { "level": 2, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:gold_ingot", "cost": 3, "maxUses": 12, "villagerXp": 10 },
+        { "level": 2, "type": "items", "item": "minecraft:lapis_lazuli", "count": 1, "currency": "minecraft:emerald", "cost": 1, "maxUses": 12, "villagerXp": 5 },
+
+        { "level": 3, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:rabbit_foot", "cost": 2, "maxUses": 12, "villagerXp": 20 },
+        { "level": 3, "type": "items", "item": "minecraft:glowstone", "count": 4, "currency": "minecraft:emerald", "cost": 1, "maxUses": 12, "villagerXp": 10 },
+
+        { "level": 4, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:scute", "cost": 4, "maxUses": 12, "villagerXp": 30 },
+        { "level": 4, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:glass_bottle", "cost": 9, "maxUses": 12, "villagerXp": 30 },
+        { "level": 4, "type": "items", "item": "minecraft:ender_pearl", "count": 1, "currency": "minecraft:emerald", "cost": 5, "maxUses": 12, "villagerXp": 15 },
+
+        { "level": 5, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:nether_wart", "cost": 22, "maxUses": 12, "villagerXp": 30 },
+        { "level": 5, "type": "items", "item": "minecraft:experience_bottle", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 30 }
       ]
     },
     {
       "profession": "minecraft:armorer",
       "trades": [
+        { "level": 1, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:coal", "cost": 15, "maxUses": 16, "villagerXp": 2 },
+        { "level": 1, "type": "items", "item": "minecraft:iron_leggings", "count": 1, "currency": "minecraft:emerald", "cost": 7, "maxUses": 12, "villagerXp": 1, "priceMultiplier": 0.2 },
+        { "level": 1, "type": "items", "item": "minecraft:iron_boots", "count": 1, "currency": "minecraft:emerald", "cost": 4, "maxUses": 12, "villagerXp": 1, "priceMultiplier": 0.2 },
+        { "level": 1, "type": "items", "item": "minecraft:iron_helmet", "count": 1, "currency": "minecraft:emerald", "cost": 5, "maxUses": 12, "villagerXp": 1, "priceMultiplier": 0.2 },
+        { "level": 1, "type": "items", "item": "minecraft:iron_chestplate", "count": 1, "currency": "minecraft:emerald", "cost": 9, "maxUses": 12, "villagerXp": 1, "priceMultiplier": 0.2 },
 
+        { "level": 2, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:iron_ingot", "cost": 4, "maxUses": 16, "villagerXp": 10 },
+        { "level": 2, "type": "items", "item": "minecraft:bell", "count": 1, "currency": "minecraft:emerald", "cost": 36, "maxUses": 12, "villagerXp": 5, "priceMultiplier": 0.2 },
+        { "level": 2, "type": "items", "item": "minecraft:chainmail_boots", "count": 1, "currency": "minecraft:emerald", "cost": 1, "maxUses": 12, "villagerXp": 5, "priceMultiplier": 0.2 },
+        { "level": 2, "type": "items", "item": "minecraft:chainmail_leggings", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 5, "priceMultiplier": 0.2 },
+
+        { "level": 3, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:lava_bucket", "cost": 1, "maxUses": 12, "villagerXp": 20 },
+        { "level": 3, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:diamond", "cost": 1, "maxUses": 12, "villagerXp": 20 },
+        { "level": 3, "type": "items", "item": "minecraft:chainmail_helmet", "count": 1, "currency": "minecraft:emerald", "cost": 1, "maxUses": 12, "villagerXp": 10, "priceMultiplier": 0.2 },
+        { "level": 3, "type": "items", "item": "minecraft:chainmail_chestplate", "count": 1, "currency": "minecraft:emerald", "cost": 4, "maxUses": 12, "villagerXp": 10, "priceMultiplier": 0.2 },
+        { "level": 3, "type": "items", "item": "minecraft:shield", "count": 1, "currency": "minecraft:emerald", "cost": 5, "maxUses": 12, "villagerXp": 10, "priceMultiplier": 0.2 },
+
+        { "level": 4, "type": "enchanted_item", "item": "minecraft:diamond_leggings", "currency": "minecraft:emerald", "cost": 14, "maxUses": 3, "villagerXp": 15, "priceMultiplier": 0.2 },
+        { "level": 4, "type": "enchanted_item", "item": "minecraft:diamond_boots", "currency": "minecraft:emerald", "cost": 8, "maxUses": 3, "villagerXp": 15, "priceMultiplier": 0.2 },
+
+        { "level": 5, "type": "enchanted_item", "item": "minecraft:diamond_helmet", "currency": "minecraft:emerald", "cost": 8, "maxUses": 3, "villagerXp": 30, "priceMultiplier": 0.2 },
+        { "level": 5, "type": "enchanted_item", "item": "minecraft:diamond_chestplate", "currency": "minecraft:emerald", "cost": 16, "maxUses": 3, "villagerXp": 30, "priceMultiplier": 0.2 }
       ]
     },
     {
       "profession": "minecraft:weaponsmith",
       "trades": [
+        { "level": 1, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:coal", "cost": 15, "maxUses": 16, "villagerXp": 2 },
+        { "level": 1, "type": "items", "item": "minecraft:iron_axe", "count": 1, "currency": "minecraft:emerald", "cost": 3, "maxUses": 12, "villagerXp": 1, "priceMultiplier": 0.2 },
+        { "level": 1, "type": "enchanted_item", "item": "minecraft:iron_sword", "currency": "minecraft:emerald", "cost": 2, "maxUses": 3, "villagerXp": 1 },
+
+        { "level": 2, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:iron_ingot", "cost": 4, "maxUses": 12, "villagerXp": 10 },
+        { "level": 2, "type": "items", "item": "minecraft:bell", "count": 1, "currency": "minecraft:emerald", "cost": 36, "maxUses": 12, "villagerXp": 5, "priceMultiplier": 0.2 },
+
+        { "level": 3, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:flint", "cost": 24, "maxUses": 12, "villagerXp": 20 },
+
+        { "level": 4, "type": "items", "item": "minecraft:emerald", "count": 1, "currency": "minecraft:diamond", "cost": 1, "maxUses": 12, "villagerXp": 30 },
+        { "level": 4, "type": "enchanted_item", "item": "minecraft:diamond_axe", "currency": "minecraft:emerald", "cost": 12, "maxUses": 3, "villagerXp": 15, "priceMultiplier": 0.2 },
+
+        { "level": 5, "type": "enchanted_item", "item": "minecraft:diamond_sword", "currency": "minecraft:emerald", "cost": 8, "maxUses": 3, "villagerXp": 30, "priceMultiplier": 0.2 }
 
       ]
     },
