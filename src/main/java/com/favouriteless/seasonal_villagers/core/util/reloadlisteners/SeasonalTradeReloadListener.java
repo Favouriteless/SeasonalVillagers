@@ -13,7 +13,6 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.npc.VillagerProfession;
-import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -78,9 +77,8 @@ public class SeasonalTradeReloadListener extends SimpleJsonResourceReloadListene
 								return;
 							Int2ObjectMap<ItemListing[]> tradeMap = getTradeMap(entry.getAsJsonArray("trades"));
 
+							ensureNoNulls(tradeMap);
 							seasonTrades.put(profession, tradeMap);
-
-							VillagerTrades.TRADES.put(profession, tradeMap);
 						});
 					}
 				}
@@ -91,6 +89,13 @@ public class SeasonalTradeReloadListener extends SimpleJsonResourceReloadListene
 		});
 	}
 
+	public void ensureNoNulls(Int2ObjectMap<ItemListing[]> levelTradesMap) {
+		for(int i = 1; i < 6; i++) {
+			if(levelTradesMap.get(i) == null)
+				levelTradesMap.put(i, new ItemListing[] { });
+		}
+	}
+
 	public Int2ObjectMap<ItemListing[]> getTradeMap(JsonArray tradeArray) {
 		Int2ObjectMap<List<ItemListing>> tradeMap = new Int2ObjectOpenHashMap<>();
 		tradeArray.forEach(tradeEntry -> {
@@ -98,7 +103,7 @@ public class SeasonalTradeReloadListener extends SimpleJsonResourceReloadListene
 
 			if(!trade.has("type") || !TYPE_FACTORIES.containsKey(trade.get("type").getAsString()))
 				return;
-			if(!trade.has("level"))
+			if(!trade.has("level") || trade.get("level").getAsInt() <= 0)
 				return;
 
 			String type = trade.get("type").getAsString();

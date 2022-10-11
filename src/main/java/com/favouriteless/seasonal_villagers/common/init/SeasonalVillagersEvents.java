@@ -29,6 +29,11 @@ public class SeasonalVillagersEvents {
 					if(!currentSeason.equals(cap.getSeasonValue()) || (cap.getDayValue() - seasonState.getDay()) > seasonState.getSeasonDuration()) {
 						VillagerTrades.TRADES.putAll(SeasonalTradeData.SEASONAL_TRADES.SEASON_TO_TRADES.get(currentSeason.toLowerCase()));
 						villager.setOffers(null);
+						int startLevel = villager.getVillagerData().getLevel();
+						for(int i = 0; i < startLevel-1; i++) {
+							villager.getVillagerData().setLevel(i+1);
+							villager.updateTrades();
+						}
 						cap.setSeasonValue(currentSeason);
 						cap.setDayValue(seasonState.getDay());
 					}
